@@ -57,7 +57,9 @@ function Node({ node, active, onClick, nodeRef, runOrder = 0 }) {
         active ? 'ring-2' : 'hover:-translate-y-0.5'
       }`}
       style={{
-        ...(active ? { ['--tw-ring-color']: s.ring, borderColor: s.ring } : { borderColor: '#e8e8ee' }),
+        // one consistent selection-ring color (brand red) for the focused node,
+        // regardless of node kind — avoids two different highlight colors at once
+        ...(active ? { ['--tw-ring-color']: '#ec2127', borderColor: '#ec2127' } : { borderColor: '#e8e8ee' }),
         animationDelay: `${runOrder * 0.12}s`,
       }}
     >
@@ -81,7 +83,7 @@ function Node({ node, active, onClick, nodeRef, runOrder = 0 }) {
         >
           {s.chip}
         </span>
-        <span className="text-[10px] text-ink-soft/60">แตะดู</span>
+        <span className="text-[10px] text-ink-mute">แตะดู</span>
       </div>
     </button>
   )
@@ -267,7 +269,7 @@ export default function Workflow() {
               </div>
               <p className="mt-1.5 text-[14px] leading-relaxed text-ink-soft">{openNode.detail}</p>
               <div className="mt-3 inline-flex items-center gap-2 rounded-lg bg-cloud px-3 py-1.5 text-[12px] font-medium text-ink-soft">
-                <span className="inline-flex items-center gap-1 text-ink-soft/70">
+                <span className="inline-flex items-center gap-1 text-ink-mute">
                   <Settings className="h-4 w-4" aria-hidden="true" />
                   Implementation:
                 </span>

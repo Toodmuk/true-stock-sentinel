@@ -70,7 +70,7 @@ function ForecastCard({ sku }) {
         <div className="!mt-3 rounded-xl border border-line bg-cloud p-3">
           <div className="flex items-end justify-between">
             <div>
-              <div className="text-[11px] font-semibold uppercase tracking-wide text-ink-soft/70">
+              <div className="text-[11px] font-semibold uppercase tracking-wide text-ink-mute">
                 Days of cover
               </div>
               <div className="tnum text-[28px] font-bold leading-none" style={{ color: r.color }}>
@@ -80,7 +80,7 @@ function ForecastCard({ sku }) {
             </div>
             {sku.recommendRestock > 0 ? (
               <div className="text-right">
-                <div className="text-[11px] font-semibold uppercase tracking-wide text-ink-soft/70">
+                <div className="text-[11px] font-semibold uppercase tracking-wide text-ink-mute">
                   แนะนำเติม
                 </div>
                 <div className="tnum text-[20px] font-bold text-ink">
@@ -94,7 +94,7 @@ function ForecastCard({ sku }) {
           <p className="mt-2 text-[12px] leading-relaxed text-ink-soft">
             {sku.risk === 'critical' && (
               <>
-                <strong className="text-true">จะหมดก่อนสุดสัปดาห์</strong> ที่ยอดขายพุ่ง 3 เท่า —{' '}
+                <strong className="text-true">จะหมดก่อนสุดสัปดาห์</strong> ช่วงที่ลูกค้าแน่นเป็นพิเศษ —{' '}
               </>
             )}
             {sku.reason}

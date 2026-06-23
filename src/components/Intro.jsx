@@ -69,7 +69,7 @@ export default function Intro() {
 
       {/* origin story */}
       <Card className="p-6 sm:p-8">
-        <SectionLabel>เรื่องจริงที่เป็นจุดเริ่มต้น</SectionLabel>
+        <SectionLabel>เรื่องจริงจากหน้าร้าน · จุดเริ่มต้น</SectionLabel>
         <h2 className="text-[20px] font-bold text-ink">
           วันที่ลูกค้าเดินออกไปซื้อ iPad จาก AIS
         </h2>

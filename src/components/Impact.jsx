@@ -7,7 +7,7 @@ import {
   ArrowRight,
 } from 'lucide-react'
 import { IMPACT } from '../data/mock.js'
-import { Card, SectionLabel, CountUp } from './ui.jsx'
+import { Card, SectionLabel, CountUp, Tag } from './ui.jsx'
 
 // IMPACT.values index → lucide icon (replaces emoji at the render site; mock.js stays untouched)
 const VALUE_ICON = [ShieldCheck, TrendingUp, Leaf]
@@ -49,8 +49,14 @@ export default function Impact() {
         <h2 className="text-[20px] font-bold text-ink">จากเสียลูกค้าให้คู่แข่ง → ปิดการขายได้</h2>
       </div>
 
-      {/* hero stat band — the numbers a CxO remembers */}
+      {/* hero stat band — framed as expected/illustrative so the numbers aren't over-claimed */}
       <Card className="overflow-hidden">
+        <div className="flex items-center justify-between border-b border-line px-5 py-2.5">
+          <span className="text-[11px] font-bold uppercase tracking-wide text-ink-mute">
+            ผลลัพธ์ที่คาดหวัง
+          </span>
+          <Tag>ตัวอย่างเชิงอธิบาย</Tag>
+        </div>
         <div className="grid divide-y divide-line sm:grid-cols-3 sm:divide-x sm:divide-y-0">
           <div className="px-5 py-6 text-center">
             <div className="tnum text-[34px] font-extrabold leading-none text-true">
@@ -65,7 +71,7 @@ export default function Impact() {
               <CountUp to={0} />
             </div>
             <div className="mt-1.5 text-[12px] font-medium leading-relaxed text-ink-soft">
-              ยอดขายที่หลุดไปคู่แข่งเพราะของหมด
+              เป้าหมาย — ยอดขายหลุดไปคู่แข่งเพราะของหมด
             </div>
           </div>
           <div className="px-5 py-6 text-center">

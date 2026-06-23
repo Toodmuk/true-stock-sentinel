@@ -31,7 +31,7 @@ function Shell() {
           </div>
         </div>
         {/* tab bar — horizontal scroll on small screens */}
-        <nav className="mx-auto w-full max-w-6xl px-2 sm:px-6">
+        <nav className="relative mx-auto w-full max-w-6xl px-2 sm:px-6">
           <div className="no-scrollbar -mb-px flex gap-1 overflow-x-auto">
             {TABS.map((t) => {
               const active = t.id === tab
@@ -51,6 +51,11 @@ function Shell() {
               )
             })}
           </div>
+          {/* scroll affordance: a soft fade on the right edge hints there are more tabs (small screens) */}
+          <div
+            className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-white to-transparent sm:hidden"
+            aria-hidden="true"
+          />
         </nav>
       </header>
 
@@ -63,7 +68,7 @@ function Shell() {
 
       {/* footer */}
       <footer className="border-t border-line bg-white">
-        <div className="mx-auto flex w-full max-w-6xl flex-col items-start justify-between gap-1 px-4 py-4 text-[11px] text-ink-soft/70 sm:flex-row sm:items-center sm:px-6">
+        <div className="mx-auto flex w-full max-w-6xl flex-col items-start justify-between gap-1 px-4 py-4 text-[11px] text-ink-mute sm:flex-row sm:items-center sm:px-6">
           <span>ต้นแบบแนวคิด · True Next Gen — ไม่ใช่ระบบจริง ข้อมูลเป็นตัวอย่างเพื่อการนำเสนอ</span>
           <span>True Stock Sentinel · Agentic AI</span>
         </div>

@@ -19,7 +19,7 @@ export const CAMPAIGN = {
   source: 'ปฏิทินแคมเปญการตลาด + หน้าโปรโมชันคู่แข่ง',
   insight:
     'ช่วงเปิดเทอม ดีมานด์ iPad / โน้ตบุ๊กพุ่งสูงเป็นพิเศษ โดยเฉพาะรุ่นราคาเริ่มต้นที่ผูกโปรผ่อน 0%',
-  confidence: 'สูง (87%)',
+  confidence: 'สูง (เชิงอธิบาย)',
 }
 
 // helper for consistent derived numbers

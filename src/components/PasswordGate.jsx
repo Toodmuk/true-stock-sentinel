@@ -51,15 +51,20 @@ export default function PasswordGate({ children }) {
           ต้นแบบแนวคิด Agentic AI ตรวจสต็อกอัตโนมัติ — กรอกรหัสผ่านเพื่อเข้าชม
         </p>
 
+        <label htmlFor="tss-pw" className="sr-only">รหัสผ่าน</label>
         <div
-          className={`mt-5 flex items-center gap-2 rounded-xl border bg-cloud px-3 py-2.5 transition ${
+          className={`mt-5 flex items-center gap-2 rounded-xl border bg-cloud px-3 py-2.5 transition focus-within:ring-2 focus-within:ring-true ${
             err ? 'border-true' : 'border-line'
           }`}
         >
           <Lock className="h-4 w-4 shrink-0 text-ink-soft" aria-hidden="true" />
           <input
+            id="tss-pw"
             type="password"
             autoFocus
+            autoComplete="current-password"
+            aria-invalid={err}
+            aria-describedby={err ? 'tss-pw-err' : undefined}
             value={val}
             onChange={(e) => {
               setVal(e.target.value)
@@ -70,7 +75,7 @@ export default function PasswordGate({ children }) {
           />
         </div>
         {err && (
-          <p className="mt-2 text-[12px] font-medium text-true">รหัสผ่านไม่ถูกต้อง ลองอีกครั้ง</p>
+          <p id="tss-pw-err" role="alert" className="mt-2 text-[12px] font-medium text-true">รหัสผ่านไม่ถูกต้อง ลองอีกครั้ง</p>
         )}
 
         <button
@@ -80,7 +85,7 @@ export default function PasswordGate({ children }) {
           เข้าชม
         </button>
 
-        <p className="mt-4 text-center text-[11px] leading-relaxed text-ink-soft/70">
+        <p className="mt-4 text-center text-[11px] leading-relaxed text-ink-mute">
           ต้นแบบแนวคิด · True Next Gen
         </p>
       </form>

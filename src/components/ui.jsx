@@ -25,7 +25,8 @@ export function CountUp({ to, decimals = 0, duration = 750, prefix = '', suffix 
   }, [to, duration])
   return (
     <span className={className}>
-      {prefix}{val.toFixed(decimals)}{suffix}
+      <span aria-hidden="true">{prefix}{val.toFixed(decimals)}{suffix}</span>
+      <span className="sr-only">{prefix}{to.toFixed(decimals)}{suffix}</span>
     </span>
   )
 }
@@ -70,7 +71,7 @@ export function Tag({ children, color = '#ec2127' }) {
 
 export function SectionLabel({ children }) {
   return (
-    <div className="mb-2 text-[11px] font-bold uppercase tracking-wider text-ink-soft/70">
+    <div className="mb-2 text-[11px] font-bold uppercase tracking-wider text-ink-mute">
       {children}
     </div>
   )

@@ -120,6 +120,7 @@ export default function LineReport() {
           {/* CTA button bubble */}
           <Bubble delay={1}>
             <button
+              type="button"
               className="flex min-h-[44px] w-full items-center justify-center rounded-xl py-2 text-[13px] font-bold text-white shadow-sm"
               style={{ background: LINE_GREEN }}
             >

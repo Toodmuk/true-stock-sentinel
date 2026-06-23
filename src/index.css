@@ -6,6 +6,7 @@
   --color-true-soft: #fef2f2;
   --color-ink: #1a1a1f;
   --color-ink-soft: #4b4b55;
+  --color-ink-mute: #6b6b75;
   --color-line: #e8e8ee;
   --color-cloud: #f6f6f9;
 
@@ -50,16 +51,20 @@ select,
 [tabindex] {
   touch-action: manipulation;
 }
+/* keyboard focus ring for actionable controls. Inputs are EXCLUDED — their
+   styled field wrappers show focus via :focus-within (matches field shape). */
 button:focus-visible,
 a:focus-visible,
-input:focus-visible,
-select:focus-visible,
-textarea:focus-visible,
 [role="button"]:focus-visible,
 [tabindex]:focus-visible {
   outline: 2px solid var(--color-true);
   outline-offset: 2px;
   border-radius: 8px;
+}
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: none;
 }
 .tnum {
   font-variant-numeric: tabular-nums;

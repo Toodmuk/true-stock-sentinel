@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { Target, Workflow as WorkflowIcon, Brain, MessageSquare, TrendingUp } from 'lucide-react'
-import PasswordGate from './components/PasswordGate.jsx'
 import { Brand, LivePill } from './components/ui.jsx'
 import Intro from './components/Intro.jsx'
 import Workflow from './components/Workflow.jsx'
@@ -78,9 +77,5 @@ function Shell() {
 }
 
 export default function App() {
-  return (
-    <PasswordGate>
-      <Shell />
-    </PasswordGate>
-  )
+  return <Shell />
 }

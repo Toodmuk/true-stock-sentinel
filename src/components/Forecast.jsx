@@ -56,15 +56,15 @@ function ForecastCard({ sku }) {
 
       <div className="space-y-2.5 px-5 py-4">
         <div className="stagger space-y-2.5">
-          <Step n="1" label="สต็อกคงเหลือตอนนี้" value={`${sku.onHand} ชิ้น`} accent={r.color} />
-          <Step n="2" label="ขายเฉลี่ยปกติ" value={`${sku.sellThrough}/สัปดาห์`} accent={r.color} />
+          <Step n="1" label="Current stock on hand" value={`${sku.onHand} units`} accent={r.color} />
+          <Step n="2" label="Baseline sell-through" value={`${sku.sellThrough}/week`} accent={r.color} />
           <Step
             n="3"
-            label={`ตัวคูณดีมานด์จากโปร (×${sku.promoUplift})`}
-            value={`${sku.forecastDemand}/สัปดาห์`}
+            label={`Promo demand multiplier (×${sku.promoUplift})`}
+            value={`${sku.forecastDemand}/week`}
             accent={r.color}
           />
-          <Step n="4" label="= อัตราขายช่วงโปร" value={`~${dailyDemand}/วัน`} accent={r.color} />
+          <Step n="4" label="= Projected promo sell rate" value={`~${dailyDemand}/day`} accent={r.color} />
         </div>
 
         <div className="!mt-3 rounded-xl border border-line bg-cloud p-3">
@@ -75,13 +75,13 @@ function ForecastCard({ sku }) {
               </div>
               <div className="tnum text-[28px] font-bold leading-none" style={{ color: r.color }}>
                 <CountUp to={sku.cover} decimals={1} />
-                <span className="ml-1 text-[14px] font-medium text-ink-soft">วัน</span>
+                <span className="ml-1 text-[14px] font-medium text-ink-soft">days</span>
               </div>
             </div>
             {sku.recommendRestock > 0 ? (
               <div className="text-right">
                 <div className="text-[11px] font-semibold uppercase tracking-wide text-ink-mute">
-                  แนะนำเติม
+                  Restock Qty
                 </div>
                 <div
                   className="tnum inline-block rounded-lg px-2.5 py-0.5 text-[19px] font-bold"
@@ -91,13 +91,13 @@ function ForecastCard({ sku }) {
                 </div>
               </div>
             ) : (
-              <div className="text-[12px] font-semibold text-[#16a34a]">ไม่ต้องเติมเพิ่ม</div>
+              <div className="text-[12px] font-semibold text-[#16a34a]">No restock needed</div>
             )}
           </div>
           <p className="mt-2 text-[12px] leading-relaxed text-ink-soft">
             {sku.risk === 'critical' && (
               <>
-                <strong className="text-true">จะหมดก่อนสุดสัปดาห์</strong> ช่วงที่ลูกค้าแน่นเป็นพิเศษ —{' '}
+                <strong className="text-true">Will stock out before the weekend</strong> — peak traffic period —{' '}
               </>
             )}
             {sku.reason}
@@ -114,19 +114,19 @@ export default function Forecast() {
     <div className="stagger space-y-5">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div>
-          <SectionLabel>การให้เหตุผลของเอเจนต์ (AI Forecast)</SectionLabel>
-          <h2 className="text-[20px] font-bold text-ink">โชว์การคิดแบบโปร่งใส</h2>
+          <SectionLabel>Agent Reasoning — AI Forecast</SectionLabel>
+          <h2 className="text-[20px] font-bold text-ink">Transparent Decision-Making</h2>
         </div>
-        <LivePill label="วิเคราะห์ล่าสุด: วันนี้" />
+        <LivePill label="Last analysed: Today" />
       </div>
 
       {/* the decision rule the agent applies — makes "it decides, not just counts" legible */}
       <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 rounded-xl border border-line bg-white px-3.5 py-2.5 text-[12px] shadow-card">
-        <span className="font-semibold text-ink-soft">เกณฑ์ตัดสินใจ (days of cover):</span>
+        <span className="font-semibold text-ink-soft">Decision threshold (days of cover):</span>
         {[
-          { c: RISK.critical.color, t: '< 5 วัน · เติมด่วน' },
-          { c: RISK.watch.color, t: '5–9 วัน · เฝ้าระวัง' },
-          { c: RISK.healthy.color, t: '9+ วัน · เพียงพอ' },
+          { c: RISK.critical.color, t: '< 5 days · Restock now' },
+          { c: RISK.watch.color, t: '5–9 days · Monitor' },
+          { c: RISK.healthy.color, t: '9+ days · Healthy' },
         ].map((x) => (
           <span key={x.t} className="inline-flex items-center gap-1.5 font-medium text-ink">
             <span className="h-2.5 w-2.5 rounded-full" style={{ background: x.c }} aria-hidden="true" />
@@ -142,13 +142,13 @@ export default function Forecast() {
           <div>
             <div className="flex flex-wrap items-center gap-2">
               <span className="text-[14px] font-bold text-ink">
-                สัญญาณที่ตรวจพบ: {CAMPAIGN.name}
+                Signal detected: {CAMPAIGN.name}
               </span>
               <Tag>{CAMPAIGN.window}</Tag>
             </div>
             <p className="mt-1 text-[13px] leading-relaxed text-ink-soft">{CAMPAIGN.insight}</p>
             <p className="mt-1 text-[12px] text-ink-soft/80">
-              ที่มา: {CAMPAIGN.source} · ความเชื่อมั่น {CAMPAIGN.confidence}
+              Source: {CAMPAIGN.source} · Confidence {CAMPAIGN.confidence}
             </p>
           </div>
         </div>
@@ -162,9 +162,9 @@ export default function Forecast() {
 
       <Card className="p-4">
         <p className="text-[12px] leading-relaxed text-ink-soft">
-          <span className="font-semibold text-ink">หมายเหตุความเชื่อมั่น:</span> การพยากรณ์อิงจากอัตราการขายย้อนหลัง 8 สัปดาห์
-          และตัวคูณดีมานด์ของแคมเปญในอดีตที่ใกล้เคียงกัน ({SHOP.weekendNote.toLowerCase()})
-          เอเจนต์จะปรับตัวคูณใหม่ทุกครั้งหลังจบแคมเปญ เพื่อให้แม่นขึ้นเรื่อย ๆ
+          <span className="font-semibold text-ink">Confidence note:</span> Forecasts are based on 8 weeks of historical
+          sell-through and demand multipliers from comparable past campaigns ({SHOP.weekendNote.toLowerCase()}).
+          The agent recalibrates multipliers after each campaign to improve accuracy over time.
         </p>
       </Card>
     </div>

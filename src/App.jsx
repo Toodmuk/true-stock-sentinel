@@ -9,11 +9,11 @@ import LineReport from './components/LineReport.jsx'
 import Impact from './components/Impact.jsx'
 
 const TABS = [
-  { id: 'intro', label: 'แนวคิด', icon: Target, el: Intro },
-  { id: 'workflow', label: 'เวิร์กโฟลว์', icon: WorkflowIcon, el: Workflow },
-  { id: 'forecast', label: 'พยากรณ์ AI', icon: Brain, el: Forecast },
-  { id: 'line', label: 'รายงาน LINE', icon: MessageSquare, el: LineReport },
-  { id: 'impact', label: 'ผลลัพธ์', icon: TrendingUp, el: Impact },
+  { id: 'intro', label: 'Overview', icon: Target, el: Intro },
+  { id: 'workflow', label: 'Workflow', icon: WorkflowIcon, el: Workflow },
+  { id: 'forecast', label: 'AI Forecast', icon: Brain, el: Forecast },
+  { id: 'line', label: 'LINE Report', icon: MessageSquare, el: LineReport },
+  { id: 'impact', label: 'Impact', icon: TrendingUp, el: Impact },
 ]
 
 function Shell() {
@@ -69,7 +69,7 @@ function Shell() {
       {/* footer */}
       <footer className="border-t border-line bg-white">
         <div className="mx-auto flex w-full max-w-6xl flex-col items-start justify-between gap-1 px-4 py-4 text-[11px] text-ink-mute sm:flex-row sm:items-center sm:px-6">
-          <span>ต้นแบบแนวคิด · True Next Gen — ไม่ใช่ระบบจริง ข้อมูลเป็นตัวอย่างเพื่อการนำเสนอ</span>
+          <span>True Stock Sentinel · True Corporation</span>
           <span>True Stock Sentinel · Agentic AI</span>
         </div>
       </footer>

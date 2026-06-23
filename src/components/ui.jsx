@@ -86,7 +86,7 @@ export function Card({ children, className = '' }) {
 }
 
 // A small "live agent" status pill with a pulsing dot.
-export function LivePill({ label = 'Agent กำลังทำงาน' }) {
+export function LivePill({ label = 'Agent running' }) {
   return (
     <span className="inline-flex items-center gap-1.5 rounded-full border border-line bg-white px-2.5 py-1 text-[11px] font-semibold text-ink-soft">
       <span className="relative flex h-2 w-2">
@@ -100,7 +100,7 @@ export function LivePill({ label = 'Agent กำลังทำงาน' }) {
 
 // risk → color/label mapping reused across screens
 export const RISK = {
-  critical: { color: '#ec2127', dot: '🔴', label: 'เสี่ยงหมดสต็อก', soft: '#fef2f2' },
-  watch: { color: '#d97706', dot: '🟠', label: 'เฝ้าระวัง', soft: '#fffbeb' },
-  healthy: { color: '#16a34a', dot: '🟢', label: 'เพียงพอ', soft: '#f0fdf4' },
+  critical: { color: '#ec2127', dot: '🔴', label: 'At risk of stockout', soft: '#fef2f2' },
+  watch: { color: '#d97706', dot: '🟠', label: 'Watch', soft: '#fffbeb' },
+  healthy: { color: '#16a34a', dot: '🟢', label: 'Sufficient', soft: '#f0fdf4' },
 }

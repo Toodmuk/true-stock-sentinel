@@ -13,14 +13,14 @@ import { NODES, EDGES } from '../data/mock.js'
 import { Card, SectionLabel, LivePill, Tag } from './ui.jsx'
 
 const KIND_STYLE = {
-  trigger: { ring: '#6366f1', chip: 'อัตโนมัติ' },
-  data: { ring: '#0ea5e9', chip: 'ดึงข้อมูล' },
+  trigger: { ring: '#6366f1', chip: 'Automated' },
+  data: { ring: '#0ea5e9', chip: 'Data Fetch' },
   agent: { ring: '#ec2127', chip: 'AI Agent' },
-  decision: { ring: '#d97706', chip: 'ตัดสินใจ' },
-  action: { ring: '#16a34a', chip: 'ลงมือ' },
+  decision: { ring: '#d97706', chip: 'Decision' },
+  action: { ring: '#16a34a', chip: 'Action' },
 }
 
-// node.id → lucide icon (replaces the emoji stored in mock.js at the render site)
+// node.id -> lucide icon (replaces the emoji stored in mock.js at the render site)
 const NODE_ICON = {
   trigger: Clock,
   stock: Package,
@@ -31,7 +31,7 @@ const NODE_ICON = {
   log: ChartColumn,
 }
 
-// Visual layout: columns left → right. Each node is placed in a column;
+// Visual layout: columns left -> right. Each node is placed in a column;
 // connectors are drawn by measuring real DOM positions, so the graph stays
 // accurate whether it's stacked (mobile) or spread out (desktop).
 const COLUMNS = [
@@ -58,7 +58,7 @@ function Node({ node, active, onClick, nodeRef, runOrder = 0 }) {
       }`}
       style={{
         // one consistent selection-ring color (brand red) for the focused node,
-        // regardless of node kind — avoids two different highlight colors at once
+        // regardless of node kind -- avoids two different highlight colors at once
         ...(active ? { ['--tw-ring-color']: '#ec2127', borderColor: '#ec2127' } : { borderColor: '#e8e8ee' }),
         animationDelay: `${runOrder * 0.12}s`,
       }}
@@ -83,7 +83,7 @@ function Node({ node, active, onClick, nodeRef, runOrder = 0 }) {
         >
           {s.chip}
         </span>
-        <span className="text-[10px] text-ink-mute">แตะดู</span>
+        <span className="text-[10px] text-ink-mute">Tap to view</span>
       </div>
     </button>
   )
@@ -131,7 +131,7 @@ export default function Workflow() {
       const f = center(fe)
       const t = center(te)
       if (stacked) {
-        // vertical flow: bottom of `from` → top of `to`
+        // vertical flow: bottom of `from` -> top of `to`
         const x1 = f.cx
         const y1 = f.bottom
         const x2 = t.cx
@@ -139,7 +139,7 @@ export default function Workflow() {
         const mid = (y1 + y2) / 2
         return { d: `M ${x1} ${y1} C ${x1} ${mid}, ${x2} ${mid}, ${x2} ${y2}` }
       }
-      // horizontal flow: right of `from` → left of `to`
+      // horizontal flow: right of `from` -> left of `to`
       const x1 = f.right
       const y1 = f.cy
       const x2 = t.left
@@ -177,10 +177,10 @@ export default function Workflow() {
     <div className="space-y-5">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div>
-          <SectionLabel>เวิร์กโฟลว์เอเจนต์ (สไตล์ n8n / Power Automate)</SectionLabel>
-          <h2 className="text-[20px] font-bold text-ink">7 ขั้นตอน ทำงานเองทุกสัปดาห์</h2>
+          <SectionLabel>Agent Workflow</SectionLabel>
+          <h2 className="text-[20px] font-bold text-ink">7 Steps — Runs Automatically Every Week</h2>
         </div>
-        <LivePill label="รัน: จันทร์ 07:00" />
+        <LivePill label="Runs: Monday 07:00" />
       </div>
 
       <Card className="overflow-hidden">
@@ -280,11 +280,11 @@ export default function Workflow() {
         </Card>
       )}
 
-      {/* node-type legend — fills the canvas + explains the n8n-style colour coding */}
+      {/* node-type legend -- fills the canvas + explains the n8n-style colour coding */}
       <Card className="p-4">
         <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
           <span className="text-[11px] font-bold uppercase tracking-wide text-ink-mute">
-            ประเภทโหนด
+            Node Type
           </span>
           {Object.entries(KIND_STYLE).map(([k, s]) => (
             <span key={k} className="inline-flex items-center gap-1.5 text-[12px] font-medium text-ink">
@@ -296,9 +296,9 @@ export default function Workflow() {
       </Card>
 
       <p className="text-[12px] leading-relaxed text-ink-mute">
-        เส้นทึบสีแดงคือเส้นทางข้อมูลที่กำลัง “ไหล” ระหว่างขั้นตอน · โหนด{' '}
-        <span className="font-semibold text-true">AI Forecast</span> คือหัวใจของเอเจนต์ ·
-        แตะที่โหนดเพื่อดูรายละเอียดแต่ละขั้นตอน
+        The red line shows live data flowing between steps &middot;{' '}
+        <span className="font-semibold text-true">AI Forecast</span> is the core of the agent &middot;
+        Tap any node to see step details
       </p>
     </div>
   )

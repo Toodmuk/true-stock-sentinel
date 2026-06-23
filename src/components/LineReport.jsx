@@ -24,7 +24,7 @@ function PhoneFrame({ children }) {
               <div className="truncate text-[13px] font-bold leading-tight">
                 {LINE_REPORT.botName}
               </div>
-              <div className="truncate text-[10px] text-white/80">Official Account · บอท</div>
+              <div className="truncate text-[10px] text-white/80">Official Account · Bot</div>
             </div>
             <Menu className="h-5 w-5" aria-hidden="true" />
           </div>
@@ -57,11 +57,11 @@ export default function LineReport() {
   return (
     <div className="stagger space-y-5">
       <div>
-        <SectionLabel>ผลลัพธ์ที่ผู้จัดการได้รับจริง</SectionLabel>
-        <h2 className="text-[20px] font-bold text-ink">รายงานเข้า LINE ของผู้จัดการสาขา</h2>
+        <SectionLabel>What the Manager Actually Receives</SectionLabel>
+        <h2 className="text-[20px] font-bold text-ink">Report Delivered to the Branch Manager via LINE</h2>
         <p className="mt-1 max-w-2xl text-[13px] leading-relaxed text-ink-soft">
-          ผู้จัดการ True Shop สื่อสารผ่าน LINE เป็นหลักทุกวัน เอเจนต์จึงส่งรายงานเข้า LINE โดยตรง —
-          อ่านง่าย กดต่อได้ทันที ไม่ต้องเปิดระบบหลังบ้าน
+          True Shop managers live in LINE every day. The agent delivers its report directly into LINE —
+          easy to read, actionable with a tap, no back-office login required.
         </p>
       </div>
 
@@ -83,7 +83,7 @@ export default function LineReport() {
           <Bubble delay={0.5}>
             <div className="w-full">
               <div className="mb-1.5 flex items-center gap-1.5 text-[12px] font-bold text-true">
-                🔴 ต้องเติมด่วน ({r.atRisk.length} รายการ)
+                🔴 Restock immediately ({r.atRisk.length} items)
               </div>
               {r.atRisk.map((it) => (
                 <div
@@ -105,7 +105,7 @@ export default function LineReport() {
           {/* watch + healthy */}
           <Bubble delay={0.75}>
             <div className="w-full space-y-1.5">
-              <div className="text-[12px] font-bold text-[#d97706]">🟠 เฝ้าระวัง</div>
+              <div className="text-[12px] font-bold text-[#d97706]">🟠 Monitor</div>
               {r.watch.map((it) => (
                 <p key={it.name} className="text-[11px] leading-relaxed text-ink-soft">
                   {it.emoji} <strong className="text-ink">{it.name}</strong> — {it.msg} · {it.action}
@@ -134,23 +134,23 @@ export default function LineReport() {
           {[
             {
               icon: Clock,
-              title: 'มาถึงก่อนร้านเปิด',
-              body: 'ส่งทุกเช้าวันจันทร์ 07:00 ผู้จัดการเห็นภาพรวมก่อนเริ่มงาน มีเวลาสั่งเติมของ',
+              title: 'Arrives before the store opens',
+              body: 'Sent every Monday at 07:00 — managers see the full picture before the day starts, with time to place restock orders.',
             },
             {
               icon: Target,
-              title: 'จัดลำดับความสำคัญให้แล้ว',
-              body: 'แดง = ต้องทำวันนี้, ส้ม = จับตา, เขียว = ปล่อยได้ ผู้จัดการไม่ต้องไล่อ่านทั้งสต็อก',
+              title: 'Priorities already ranked',
+              body: 'Red = act today, Orange = watch, Green = fine. No need to scroll through the entire stock list.',
             },
             {
               icon: Hash,
-              title: 'บอกจำนวนที่ควรเติมเป๊ะ ๆ',
-              body: '“เติม +20 เครื่อง ก่อนพฤหัสฯ” — เป็นคำสั่งที่ลงมือได้เลย ไม่ใช่แค่แจ้งเตือนลอย ๆ',
+              title: 'Exact restock quantities',
+              body: '”Order +20 units before Thursday” — a ready-to-act directive, not a vague alert.',
             },
             {
               icon: MessageSquare,
-              title: 'อยู่ในเครื่องมือที่ใช้จริง',
-              body: 'ไม่ต้องล็อกอินแดชบอร์ดใหม่ ทุกอย่างมาที่ LINE ที่ผู้จัดการเปิดอยู่แล้ว',
+              title: 'Delivered where managers already work',
+              body: 'No new dashboard to log into — everything arrives in the LINE app they already have open.',
             },
           ].map((c) => (
             <Card key={c.title} className="p-4">

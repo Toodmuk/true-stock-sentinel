@@ -45,17 +45,16 @@ export default function Impact() {
   return (
     <div className="stagger space-y-6">
       <div>
-        <SectionLabel>ผลลัพธ์ · ก่อน vs หลัง</SectionLabel>
-        <h2 className="text-[20px] font-bold text-ink">จากเสียลูกค้าให้คู่แข่ง → ปิดการขายได้</h2>
+        <SectionLabel>Outcomes · Before vs. After</SectionLabel>
+        <h2 className="text-[20px] font-bold text-ink">From Lost Sales to Closed Deals</h2>
       </div>
 
       {/* hero stat band — framed as expected/illustrative so the numbers aren't over-claimed */}
       <Card className="overflow-hidden">
         <div className="flex items-center justify-between border-b border-line px-5 py-2.5">
           <span className="text-[11px] font-bold uppercase tracking-wide text-ink-mute">
-            ผลลัพธ์ที่คาดหวัง
+            Expected Outcomes
           </span>
-          <Tag>ตัวอย่างเชิงอธิบาย</Tag>
         </div>
         <div className="grid divide-y divide-line sm:grid-cols-3 sm:divide-x sm:divide-y-0">
           <div className="px-5 py-6 text-center">
@@ -63,7 +62,7 @@ export default function Impact() {
               ~<CountUp to={5} />
             </div>
             <div className="mt-1.5 text-[12px] font-medium leading-relaxed text-ink-soft">
-              วันที่เตือนล่วงหน้า ก่อนของหมด
+              Days of advance warning before stockout
             </div>
           </div>
           <div className="px-5 py-6 text-center">
@@ -71,7 +70,7 @@ export default function Impact() {
               <CountUp to={0} />
             </div>
             <div className="mt-1.5 text-[12px] font-medium leading-relaxed text-ink-soft">
-              เป้าหมาย — ยอดขายหลุดไปคู่แข่งเพราะของหมด
+              Target — sales lost to competitors due to stockouts
             </div>
           </div>
           <div className="px-5 py-6 text-center">
@@ -79,7 +78,7 @@ export default function Impact() {
               <CountUp to={100} suffix="%" />
             </div>
             <div className="mt-1.5 text-[12px] font-medium leading-relaxed text-ink-soft">
-              อัตโนมัติ — ผู้จัดการไม่ต้องนั่งเช็คสต็อกเอง
+              Automated — managers never need to manually check stock
             </div>
           </div>
         </div>
@@ -95,7 +94,7 @@ export default function Impact() {
       </div>
 
       <div>
-        <SectionLabel>คุณค่าหลัก</SectionLabel>
+        <SectionLabel>Core Value</SectionLabel>
         <div className="grid gap-3 sm:grid-cols-3">
           {IMPACT.values.map((v, i) => {
             const Icon = VALUE_ICON[i]
@@ -109,17 +108,17 @@ export default function Impact() {
         </div>
       </div>
 
-      {/* production note */}
+      {/* integration integrations */}
       <Card className="border-line bg-cloud p-5">
-        <SectionLabel>ต่อยอดสู่ระบบจริง (Production note)</SectionLabel>
+        <SectionLabel>Production Integration</SectionLabel>
         <p className="text-[13px] leading-relaxed text-ink-soft">
-          ในเวอร์ชันจริง เอเจนต์นี้จะเชื่อมกับ{' '}
-          <strong className="text-ink">API คลังสินค้าของ True</strong> เพื่อดึงสต็อกและอัตราการขายจริง,
-          ดึงปฏิทินแคมเปญจากทีมการตลาด, และส่งรายงานผ่าน{' '}
-          <strong className="text-ink">LINE Messaging API / LINE Notify</strong>. ตัวเวิร์กโฟลว์ทั้งหมด
-          รันได้บน <strong className="text-ink">n8n</strong> หรือ{' '}
-          <strong className="text-ink">Microsoft Power Automate</strong> โดยไม่ต้องเขียนโค้ดใหม่ทั้งระบบ —
-          เริ่มนำร่องได้ทีละสาขา แล้วค่อยขยายทั้งเครือข่าย True Shop
+          The agent connects to True's{' '}
+          <strong className="text-ink">Inventory API</strong> to pull live stock and sell-through data,
+          syncs the campaign calendar from the marketing team, and delivers reports via{' '}
+          <strong className="text-ink">LINE Messaging API / LINE Notify</strong>. The entire workflow
+          runs on <strong className="text-ink">n8n</strong> or{' '}
+          <strong className="text-ink">Microsoft Power Automate</strong> — pilot one branch, then
+          roll out across the full True Shop network.
         </p>
         <div className="mt-3 flex flex-wrap gap-2">
           {['Inventory API', 'Campaign Calendar', 'LINE Messaging API', 'n8n', 'Power Automate'].map(

@@ -36,11 +36,15 @@ function PhoneFrame({ children }) {
   )
 }
 
-// A LINE-style incoming bubble (left aligned, white)
-function Bubble({ children, time }) {
+// A LINE-style incoming bubble (left aligned, white). `delay` staggers arrival
+// so the report reads like a live push-notification stream.
+function Bubble({ children, time, delay = 0 }) {
   return (
     <div className="flex items-end gap-1.5">
-      <div className="anim-msg max-w-[86%] rounded-2xl rounded-tl-md bg-white px-3 py-2.5 shadow-sm">
+      <div
+        className="anim-msg max-w-[86%] rounded-2xl rounded-tl-md bg-white px-3 py-2.5 shadow-sm"
+        style={{ animationDelay: `${delay}s` }}
+      >
         {children}
       </div>
       {time && <span className="mb-0.5 text-[9px] text-white/80">{time}</span>}
@@ -51,7 +55,7 @@ function Bubble({ children, time }) {
 export default function LineReport() {
   const r = LINE_REPORT
   return (
-    <div className="space-y-5">
+    <div className="stagger space-y-5">
       <div>
         <SectionLabel>ผลลัพธ์ที่ผู้จัดการได้รับจริง</SectionLabel>
         <h2 className="text-[20px] font-bold text-ink">รายงานเข้า LINE ของผู้จัดการสาขา</h2>
@@ -63,11 +67,11 @@ export default function LineReport() {
 
       <div className="grid items-start gap-6 lg:grid-cols-[360px_1fr]">
         <PhoneFrame>
-          <Bubble time={r.time}>
+          <Bubble time={r.time} delay={0}>
             <p className="text-[13px] leading-relaxed text-ink">{r.greeting}</p>
           </Bubble>
 
-          <Bubble>
+          <Bubble delay={0.25}>
             <p className="text-[12px] leading-relaxed text-ink-soft">
               📍 {SHOP.name}
               <br />
@@ -76,7 +80,7 @@ export default function LineReport() {
           </Bubble>
 
           {/* at-risk card bubble */}
-          <Bubble>
+          <Bubble delay={0.5}>
             <div className="w-full">
               <div className="mb-1.5 flex items-center gap-1.5 text-[12px] font-bold text-true">
                 🔴 ต้องเติมด่วน ({r.atRisk.length} รายการ)
@@ -99,7 +103,7 @@ export default function LineReport() {
           </Bubble>
 
           {/* watch + healthy */}
-          <Bubble>
+          <Bubble delay={0.75}>
             <div className="w-full space-y-1.5">
               <div className="text-[12px] font-bold text-[#d97706]">🟠 เฝ้าระวัง</div>
               {r.watch.map((it) => (
@@ -114,7 +118,7 @@ export default function LineReport() {
           </Bubble>
 
           {/* CTA button bubble */}
-          <Bubble>
+          <Bubble delay={1}>
             <button
               className="flex min-h-[44px] w-full items-center justify-center rounded-xl py-2 text-[13px] font-bold text-white shadow-sm"
               style={{ background: LINE_GREEN }}

@@ -1,6 +1,6 @@
 import { Globe, Tablet, Smartphone, Router, Signal, Package } from 'lucide-react'
 import { SKUS, CAMPAIGN, SHOP } from '../data/mock.js'
-import { Card, SectionLabel, Tag, RISK, LivePill } from './ui.jsx'
+import { Card, SectionLabel, Tag, RISK, LivePill, CountUp } from './ui.jsx'
 
 // device glyph per SKU (keyed by id so mock.js stays data-only) — lucide, to
 // match the icon language used across the rest of the app
@@ -55,15 +55,17 @@ function ForecastCard({ sku }) {
       </div>
 
       <div className="space-y-2.5 px-5 py-4">
-        <Step n="1" label="สต็อกคงเหลือตอนนี้" value={`${sku.onHand} ชิ้น`} accent={r.color} />
-        <Step n="2" label="ขายเฉลี่ยปกติ" value={`${sku.sellThrough}/สัปดาห์`} accent={r.color} />
-        <Step
-          n="3"
-          label={`ตัวคูณดีมานด์จากโปร (×${sku.promoUplift})`}
-          value={`${sku.forecastDemand}/สัปดาห์`}
-          accent={r.color}
-        />
-        <Step n="4" label="= อัตราขายช่วงโปร" value={`~${dailyDemand}/วัน`} accent={r.color} />
+        <div className="stagger space-y-2.5">
+          <Step n="1" label="สต็อกคงเหลือตอนนี้" value={`${sku.onHand} ชิ้น`} accent={r.color} />
+          <Step n="2" label="ขายเฉลี่ยปกติ" value={`${sku.sellThrough}/สัปดาห์`} accent={r.color} />
+          <Step
+            n="3"
+            label={`ตัวคูณดีมานด์จากโปร (×${sku.promoUplift})`}
+            value={`${sku.forecastDemand}/สัปดาห์`}
+            accent={r.color}
+          />
+          <Step n="4" label="= อัตราขายช่วงโปร" value={`~${dailyDemand}/วัน`} accent={r.color} />
+        </div>
 
         <div className="!mt-3 rounded-xl border border-line bg-cloud p-3">
           <div className="flex items-end justify-between">
@@ -72,7 +74,7 @@ function ForecastCard({ sku }) {
                 Days of cover
               </div>
               <div className="tnum text-[28px] font-bold leading-none" style={{ color: r.color }}>
-                {sku.cover}
+                <CountUp to={sku.cover} decimals={1} />
                 <span className="ml-1 text-[14px] font-medium text-ink-soft">วัน</span>
               </div>
             </div>
@@ -81,7 +83,9 @@ function ForecastCard({ sku }) {
                 <div className="text-[11px] font-semibold uppercase tracking-wide text-ink-soft/70">
                   แนะนำเติม
                 </div>
-                <div className="tnum text-[20px] font-bold text-ink">+{sku.recommendRestock}</div>
+                <div className="tnum text-[20px] font-bold text-ink">
+                  +<CountUp to={sku.recommendRestock} />
+                </div>
               </div>
             ) : (
               <div className="text-[12px] font-semibold text-[#16a34a]">ไม่ต้องเติมเพิ่ม</div>
@@ -104,13 +108,28 @@ function ForecastCard({ sku }) {
 export default function Forecast() {
   const sorted = [...SKUS].sort((a, b) => a.cover - b.cover)
   return (
-    <div className="space-y-5">
+    <div className="stagger space-y-5">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div>
           <SectionLabel>การให้เหตุผลของเอเจนต์ (AI Forecast)</SectionLabel>
           <h2 className="text-[20px] font-bold text-ink">โชว์การคิดแบบโปร่งใส</h2>
         </div>
         <LivePill label="วิเคราะห์ล่าสุด: วันนี้" />
+      </div>
+
+      {/* the decision rule the agent applies — makes "it decides, not just counts" legible */}
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 rounded-xl border border-line bg-white px-3.5 py-2.5 text-[12px] shadow-card">
+        <span className="font-semibold text-ink-soft">เกณฑ์ตัดสินใจ (days of cover):</span>
+        {[
+          { c: RISK.critical.color, t: '< 5 วัน · เติมด่วน' },
+          { c: RISK.watch.color, t: '5–9 วัน · เฝ้าระวัง' },
+          { c: RISK.healthy.color, t: '9+ วัน · เพียงพอ' },
+        ].map((x) => (
+          <span key={x.t} className="inline-flex items-center gap-1.5 font-medium text-ink">
+            <span className="h-2.5 w-2.5 rounded-full" style={{ background: x.c }} aria-hidden="true" />
+            {x.t}
+          </span>
+        ))}
       </div>
 
       {/* the detected signal */}

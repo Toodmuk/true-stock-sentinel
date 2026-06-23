@@ -7,14 +7,14 @@ import {
   ArrowRight,
 } from 'lucide-react'
 import { IMPACT } from '../data/mock.js'
-import { Card, SectionLabel } from './ui.jsx'
+import { Card, SectionLabel, CountUp } from './ui.jsx'
 
 // IMPACT.values index → lucide icon (replaces emoji at the render site; mock.js stays untouched)
 const VALUE_ICON = [ShieldCheck, TrendingUp, Leaf]
 
 function StoryCol({ data }) {
   const good = data.tone === 'good'
-  const accent = good ? '#16a34a' : '#e2231a'
+  const accent = good ? '#16a34a' : '#ec2127'
   const soft = good ? '#f0fdf4' : '#fef2f2'
   const StatusIcon = good ? CircleCheck : TriangleAlert
   return (
@@ -43,11 +43,41 @@ function StoryCol({ data }) {
 
 export default function Impact() {
   return (
-    <div className="space-y-6">
+    <div className="stagger space-y-6">
       <div>
         <SectionLabel>ผลลัพธ์ · ก่อน vs หลัง</SectionLabel>
         <h2 className="text-[20px] font-bold text-ink">จากเสียลูกค้าให้คู่แข่ง → ปิดการขายได้</h2>
       </div>
+
+      {/* hero stat band — the numbers a CxO remembers */}
+      <Card className="overflow-hidden">
+        <div className="grid divide-y divide-line sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+          <div className="px-5 py-6 text-center">
+            <div className="tnum text-[34px] font-extrabold leading-none text-true">
+              ~<CountUp to={5} />
+            </div>
+            <div className="mt-1.5 text-[12px] font-medium leading-relaxed text-ink-soft">
+              วันที่เตือนล่วงหน้า ก่อนของหมด
+            </div>
+          </div>
+          <div className="px-5 py-6 text-center">
+            <div className="tnum text-[34px] font-extrabold leading-none text-true">
+              <CountUp to={0} />
+            </div>
+            <div className="mt-1.5 text-[12px] font-medium leading-relaxed text-ink-soft">
+              ยอดขายที่หลุดไปคู่แข่งเพราะของหมด
+            </div>
+          </div>
+          <div className="px-5 py-6 text-center">
+            <div className="tnum text-[34px] font-extrabold leading-none text-true">
+              <CountUp to={100} suffix="%" />
+            </div>
+            <div className="mt-1.5 text-[12px] font-medium leading-relaxed text-ink-soft">
+              อัตโนมัติ — ผู้จัดการไม่ต้องนั่งเช็คสต็อกเอง
+            </div>
+          </div>
+        </div>
+      </Card>
 
       <div className="relative grid gap-4 sm:grid-cols-2">
         <StoryCol data={IMPACT.before} />
@@ -72,22 +102,6 @@ export default function Impact() {
           })}
         </div>
       </div>
-
-      {/* headline metric */}
-      <Card className="overflow-hidden">
-        <div className="grid divide-y divide-line sm:grid-cols-3 sm:divide-x sm:divide-y-0">
-          {[
-            { big: '~5 วัน', small: 'เตือนล่วงหน้าก่อนของหมด' },
-            { big: '0', small: 'ยอดขายที่หลุดไปคู่แข่งเพราะของหมด' },
-            { big: 'อัตโนมัติ', small: 'ผู้จัดการไม่ต้องนั่งเช็คสต็อกเอง' },
-          ].map((m) => (
-            <div key={m.small} className="px-5 py-5 text-center">
-              <div className="tnum text-[24px] font-bold text-true">{m.big}</div>
-              <div className="mt-1 text-[12px] leading-relaxed text-ink-soft">{m.small}</div>
-            </div>
-          ))}
-        </div>
-      </Card>
 
       {/* production note */}
       <Card className="border-line bg-cloud p-5">

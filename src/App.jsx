@@ -24,14 +24,14 @@ function Shell() {
     <div className="flex min-h-full flex-col bg-cloud">
       {/* header */}
       <header className="sticky top-0 z-30 border-b border-line bg-white/90 backdrop-blur">
-        <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
+        <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
           <Brand />
           <div className="hidden sm:block">
             <LivePill />
           </div>
         </div>
         {/* tab bar — horizontal scroll on small screens */}
-        <nav className="mx-auto w-full max-w-5xl px-2 sm:px-6">
+        <nav className="mx-auto w-full max-w-6xl px-2 sm:px-6">
           <div className="no-scrollbar -mb-px flex gap-1 overflow-x-auto">
             {TABS.map((t) => {
               const active = t.id === tab
@@ -55,7 +55,7 @@ function Shell() {
       </header>
 
       {/* content */}
-      <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-6 sm:px-6 sm:py-8">
+      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-6 sm:px-6 sm:py-8">
         <div key={tab} className="anim-fadeIn">
           <Active />
         </div>
@@ -63,7 +63,7 @@ function Shell() {
 
       {/* footer */}
       <footer className="border-t border-line bg-white">
-        <div className="mx-auto flex w-full max-w-5xl flex-col items-start justify-between gap-1 px-4 py-4 text-[11px] text-ink-soft/70 sm:flex-row sm:items-center sm:px-6">
+        <div className="mx-auto flex w-full max-w-6xl flex-col items-start justify-between gap-1 px-4 py-4 text-[11px] text-ink-soft/70 sm:flex-row sm:items-center sm:px-6">
           <span>ต้นแบบแนวคิด · True Next Gen — ไม่ใช่ระบบจริง ข้อมูลเป็นตัวอย่างเพื่อการนำเสนอ</span>
           <span>True Stock Sentinel · Agentic AI</span>
         </div>

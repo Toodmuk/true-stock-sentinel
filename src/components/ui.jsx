@@ -1,4 +1,34 @@
 // Small shared UI building blocks (matches the True Service Flow sibling app).
+import { useEffect, useRef, useState } from 'react'
+
+// Count-up number for headline stats. Respects prefers-reduced-motion
+// (shows the final value immediately). Only the numeric part animates.
+export function CountUp({ to, decimals = 0, duration = 750, prefix = '', suffix = '', className = '' }) {
+  const [val, setVal] = useState(0)
+  const raf = useRef(0)
+  useEffect(() => {
+    const reduce = typeof window !== 'undefined' && window.matchMedia
+      ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      : false
+    if (reduce) { setVal(to); return }
+    let start
+    const step = (t) => {
+      if (start === undefined) start = t
+      const p = Math.min(1, (t - start) / duration)
+      const eased = 1 - Math.pow(1 - p, 3) // easeOutCubic
+      setVal(to * eased)
+      if (p < 1) raf.current = requestAnimationFrame(step)
+      else setVal(to)
+    }
+    raf.current = requestAnimationFrame(step)
+    return () => cancelAnimationFrame(raf.current)
+  }, [to, duration])
+  return (
+    <span className={className}>
+      {prefix}{val.toFixed(decimals)}{suffix}
+    </span>
+  )
+}
 
 export function Brand({ small }) {
   return (
@@ -27,7 +57,7 @@ export function Brand({ small }) {
   )
 }
 
-export function Tag({ children, color = '#e2231a' }) {
+export function Tag({ children, color = '#ec2127' }) {
   return (
     <span
       className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[11px] font-semibold"
@@ -69,7 +99,7 @@ export function LivePill({ label = 'Agent กำลังทำงาน' }) {
 
 // risk → color/label mapping reused across screens
 export const RISK = {
-  critical: { color: '#e2231a', dot: '🔴', label: 'เสี่ยงหมดสต็อก', soft: '#fef2f2' },
+  critical: { color: '#ec2127', dot: '🔴', label: 'เสี่ยงหมดสต็อก', soft: '#fef2f2' },
   watch: { color: '#d97706', dot: '🟠', label: 'เฝ้าระวัง', soft: '#fffbeb' },
   healthy: { color: '#16a34a', dot: '🟢', label: 'เพียงพอ', soft: '#f0fdf4' },
 }

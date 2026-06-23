@@ -15,7 +15,7 @@ import { Card, SectionLabel, LivePill, Tag } from './ui.jsx'
 const KIND_STYLE = {
   trigger: { ring: '#6366f1', chip: 'อัตโนมัติ' },
   data: { ring: '#0ea5e9', chip: 'ดึงข้อมูล' },
-  agent: { ring: '#e2231a', chip: 'AI Agent' },
+  agent: { ring: '#ec2127', chip: 'AI Agent' },
   decision: { ring: '#d97706', chip: 'ตัดสินใจ' },
   action: { ring: '#16a34a', chip: 'ลงมือ' },
 }
@@ -42,7 +42,10 @@ const COLUMNS = [
   ['line', 'log'],
 ]
 
-function Node({ node, active, onClick, nodeRef }) {
+// order the nodes "execute" in, for the one-shot agent-run pulse on mount
+const RUN_ORDER = { trigger: 0, stock: 1, scan: 1, forecast: 2, decision: 3, line: 4, log: 4 }
+
+function Node({ node, active, onClick, nodeRef, runOrder = 0 }) {
   const s = KIND_STYLE[node.kind]
   const isAgent = node.kind === 'agent'
   const Icon = NODE_ICON[node.id]
@@ -50,10 +53,13 @@ function Node({ node, active, onClick, nodeRef }) {
     <button
       ref={nodeRef}
       onClick={onClick}
-      className={`relative w-full rounded-2xl border bg-white p-3 text-left shadow-card transition active:scale-[0.98] sm:w-[180px] ${
+      className={`node-run relative w-full rounded-2xl border bg-white p-3 text-left shadow-card transition active:scale-[0.98] sm:w-[180px] ${
         active ? 'ring-2' : 'hover:-translate-y-0.5'
       }`}
-      style={active ? { ['--tw-ring-color']: s.ring, borderColor: s.ring } : { borderColor: '#e8e8ee' }}
+      style={{
+        ...(active ? { ['--tw-ring-color']: s.ring, borderColor: s.ring } : { borderColor: '#e8e8ee' }),
+        animationDelay: `${runOrder * 0.12}s`,
+      }}
     >
       {isAgent && <span className="pulse-ring pointer-events-none absolute inset-0 rounded-2xl" />}
       <div className="flex items-center gap-2">
@@ -87,6 +93,13 @@ export default function Workflow() {
   const [paths, setPaths] = useState([])
   const [dims, setDims] = useState({ w: 0, h: 0 })
   const [open, setOpen] = useState('forecast')
+  const [reduced, setReduced] = useState(false)
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.matchMedia) {
+      setReduced(window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+    }
+  }, [])
 
   // measure node centers and build connector paths
   const recompute = () => {
@@ -168,9 +181,9 @@ export default function Workflow() {
         <LivePill label="รัน: จันทร์ 07:00" />
       </div>
 
-      <Card className="p-3 sm:p-5">
-        {/* canvas: SVG connectors behind the positioned nodes */}
-        <div ref={wrapRef} className="relative">
+      <Card className="overflow-hidden">
+        {/* n8n-style dotted-grid canvas with measured SVG connectors behind the nodes */}
+        <div ref={wrapRef} className="canvas-grid relative p-4 sm:p-5">
           <svg
             className="pointer-events-none absolute inset-0 h-full w-full"
             width={dims.w}
@@ -178,16 +191,41 @@ export default function Workflow() {
             style={{ overflow: 'visible' }}
             aria-hidden="true"
           >
+            <defs>
+              <marker
+                id="wf-arrow"
+                viewBox="0 0 10 10"
+                refX="8"
+                refY="5"
+                markerWidth="6"
+                markerHeight="6"
+                orient="auto-start-reverse"
+              >
+                <path d="M0 0 L10 5 L0 10 z" fill="#ec2127" />
+              </marker>
+            </defs>
             {paths.map((p, i) => (
               <g key={i}>
                 <path d={p.d} fill="none" stroke="#e8e8ee" strokeWidth="3" />
-                <path d={p.d} fill="none" stroke="#e2231a" strokeWidth="2" className="flow-line" />
+                <path
+                  d={p.d}
+                  fill="none"
+                  stroke="#ec2127"
+                  strokeWidth="2"
+                  className="flow-line"
+                  markerEnd="url(#wf-arrow)"
+                />
+                {!reduced && (
+                  <circle r="3.4" fill="#ec2127">
+                    <animateMotion dur="1.6s" repeatCount="indefinite" path={p.d} />
+                  </circle>
+                )}
               </g>
             ))}
           </svg>
 
           {/* nodes laid out in columns (desktop) / stacked (mobile) */}
-          <div className="relative flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+          <div className="relative flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-5">
             {COLUMNS.map((col, ci) => (
               <div key={ci} className="flex flex-col items-center gap-4 sm:flex-1">
                 {col.map((id) => {
@@ -199,6 +237,7 @@ export default function Workflow() {
                       active={open === id}
                       onClick={() => setOpen(id)}
                       nodeRef={(el) => (nodeRefs.current[id] = el)}
+                      runOrder={RUN_ORDER[id] ?? 0}
                     />
                   )
                 })}

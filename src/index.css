@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 @theme {
-  --color-true: #e2231a;
-  --color-true-dark: #b71c15;
+  --color-true: #ec2127;
+  --color-true-dark: #c4161c;
   --color-true-soft: #fef2f2;
   --color-ink: #1a1a1f;
   --color-ink-soft: #4b4b55;
@@ -146,7 +146,23 @@ textarea:focus-visible,
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
+/* ---- n8n-style workflow canvas ---- */
+.canvas-grid {
+  background-color: #fbfbfd;
+  background-image: radial-gradient(rgba(16, 16, 24, 0.10) 1.1px, transparent 1.2px);
+  background-size: 20px 20px;
+}
+/* one-shot "agent run": nodes light up left→right on mount (opacity/shadow only,
+   so node layout boxes don't move and the measured SVG connectors stay accurate) */
+@keyframes nodeRun {
+  0% { opacity: 0; }
+  50% { opacity: 1; box-shadow: 0 0 0 5px rgba(236, 33, 39, 0.18), var(--shadow-card); }
+  100% { opacity: 1; box-shadow: 0 0 0 0 rgba(236, 33, 39, 0), var(--shadow-card); }
+}
+.node-run { animation: nodeRun 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
 @media (prefers-reduced-motion: reduce) {
   *, .stagger > * { animation: none !important; }
   .flow-line { stroke-dasharray: none; }
+  .node-run { animation: none !important; }
 }

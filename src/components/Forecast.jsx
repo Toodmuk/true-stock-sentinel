@@ -83,7 +83,10 @@ function ForecastCard({ sku }) {
                 <div className="text-[11px] font-semibold uppercase tracking-wide text-ink-mute">
                   แนะนำเติม
                 </div>
-                <div className="tnum text-[20px] font-bold text-ink">
+                <div
+                  className="tnum inline-block rounded-lg px-2.5 py-0.5 text-[19px] font-bold"
+                  style={{ background: r.soft, color: r.color }}
+                >
                   +<CountUp to={sku.recommendRestock} />
                 </div>
               </div>

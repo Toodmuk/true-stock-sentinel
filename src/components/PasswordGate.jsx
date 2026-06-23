@@ -53,7 +53,7 @@ export default function PasswordGate({ children }) {
 
         <label htmlFor="tss-pw" className="sr-only">รหัสผ่าน</label>
         <div
-          className={`mt-5 flex items-center gap-2 rounded-xl border bg-cloud px-3 py-2.5 transition focus-within:ring-2 focus-within:ring-true ${
+          className={`mt-5 flex items-center gap-2 rounded-xl border bg-cloud px-3 py-2.5 transition focus-within:ring-2 focus-within:ring-true/40 ${
             err ? 'border-true' : 'border-line'
           }`}
         >

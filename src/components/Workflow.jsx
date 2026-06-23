@@ -280,7 +280,22 @@ export default function Workflow() {
         </Card>
       )}
 
-      <p className="text-[12px] leading-relaxed text-ink-soft/80">
+      {/* node-type legend — fills the canvas + explains the n8n-style colour coding */}
+      <Card className="p-4">
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+          <span className="text-[11px] font-bold uppercase tracking-wide text-ink-mute">
+            ประเภทโหนด
+          </span>
+          {Object.entries(KIND_STYLE).map(([k, s]) => (
+            <span key={k} className="inline-flex items-center gap-1.5 text-[12px] font-medium text-ink">
+              <span className="h-2.5 w-2.5 shrink-0 rounded-full" style={{ background: s.ring }} aria-hidden="true" />
+              {s.chip}
+            </span>
+          ))}
+        </div>
+      </Card>
+
+      <p className="text-[12px] leading-relaxed text-ink-mute">
         เส้นทึบสีแดงคือเส้นทางข้อมูลที่กำลัง “ไหล” ระหว่างขั้นตอน · โหนด{' '}
         <span className="font-semibold text-true">AI Forecast</span> คือหัวใจของเอเจนต์ ·
         แตะที่โหนดเพื่อดูรายละเอียดแต่ละขั้นตอน

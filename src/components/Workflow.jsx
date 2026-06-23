@@ -1,4 +1,14 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import {
+  Clock,
+  Package,
+  Globe,
+  Brain,
+  Scale,
+  MessageSquare,
+  ChartColumn,
+  Settings,
+} from 'lucide-react'
 import { NODES, EDGES } from '../data/mock.js'
 import { Card, SectionLabel, LivePill, Tag } from './ui.jsx'
 
@@ -8,6 +18,17 @@ const KIND_STYLE = {
   agent: { ring: '#e2231a', chip: 'AI Agent' },
   decision: { ring: '#d97706', chip: 'ตัดสินใจ' },
   action: { ring: '#16a34a', chip: 'ลงมือ' },
+}
+
+// node.id → lucide icon (replaces the emoji stored in mock.js at the render site)
+const NODE_ICON = {
+  trigger: Clock,
+  stock: Package,
+  scan: Globe,
+  forecast: Brain,
+  decision: Scale,
+  line: MessageSquare,
+  log: ChartColumn,
 }
 
 // Visual layout: columns left → right. Each node is placed in a column;
@@ -24,6 +45,7 @@ const COLUMNS = [
 function Node({ node, active, onClick, nodeRef }) {
   const s = KIND_STYLE[node.kind]
   const isAgent = node.kind === 'agent'
+  const Icon = NODE_ICON[node.id]
   return (
     <button
       ref={nodeRef}
@@ -36,10 +58,10 @@ function Node({ node, active, onClick, nodeRef }) {
       {isAgent && <span className="pulse-ring pointer-events-none absolute inset-0 rounded-2xl" />}
       <div className="flex items-center gap-2">
         <span
-          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-lg"
-          style={{ background: `${s.ring}14` }}
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl"
+          style={{ background: `${s.ring}14`, color: s.ring }}
         >
-          {node.icon}
+          {Icon && <Icon className="h-5 w-5" aria-hidden="true" />}
         </span>
         <div className="min-w-0">
           <div className="truncate text-[13px] font-bold text-ink">{node.title}</div>
@@ -191,10 +213,13 @@ export default function Workflow() {
         <Card className="anim-fadeUp p-5">
           <div className="flex items-start gap-3">
             <span
-              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-2xl"
-              style={{ background: `${KIND_STYLE[openNode.kind].ring}14` }}
+              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl"
+              style={{ background: `${KIND_STYLE[openNode.kind].ring}14`, color: KIND_STYLE[openNode.kind].ring }}
             >
-              {openNode.icon}
+              {(() => {
+                const OpenIcon = NODE_ICON[openNode.id]
+                return OpenIcon ? <OpenIcon className="h-6 w-6" aria-hidden="true" /> : null
+              })()}
             </span>
             <div className="min-w-0 flex-1">
               <div className="flex flex-wrap items-center gap-2">
@@ -203,7 +228,10 @@ export default function Workflow() {
               </div>
               <p className="mt-1.5 text-[14px] leading-relaxed text-ink-soft">{openNode.detail}</p>
               <div className="mt-3 inline-flex items-center gap-2 rounded-lg bg-cloud px-3 py-1.5 text-[12px] font-medium text-ink-soft">
-                <span className="text-ink-soft/60">⚙️ Implementation:</span>
+                <span className="inline-flex items-center gap-1 text-ink-soft/70">
+                  <Settings className="h-4 w-4" aria-hidden="true" />
+                  Implementation:
+                </span>
                 <code className="text-ink">{openNode.tech}</code>
               </div>
             </div>

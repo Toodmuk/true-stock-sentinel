@@ -40,6 +40,32 @@ button {
   cursor: pointer;
 }
 
+/* ---- a11y: visible focus, touch tuning, tabular figures (ui-ux-pro-max) ---- */
+button,
+a,
+input,
+textarea,
+select,
+[role="button"],
+[tabindex] {
+  touch-action: manipulation;
+}
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[role="button"]:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--color-true);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+.tnum {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
 /* ---- animations ---- */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(10px); }

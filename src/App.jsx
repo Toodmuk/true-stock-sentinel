@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Target, Workflow as WorkflowIcon, Brain, MessageSquare, TrendingUp } from 'lucide-react'
 import PasswordGate from './components/PasswordGate.jsx'
 import { Brand, LivePill } from './components/ui.jsx'
 import Intro from './components/Intro.jsx'
@@ -8,11 +9,11 @@ import LineReport from './components/LineReport.jsx'
 import Impact from './components/Impact.jsx'
 
 const TABS = [
-  { id: 'intro', label: 'แนวคิด', icon: '🎯', el: Intro },
-  { id: 'workflow', label: 'เวิร์กโฟลว์', icon: '🔗', el: Workflow },
-  { id: 'forecast', label: 'พยากรณ์ AI', icon: '🧠', el: Forecast },
-  { id: 'line', label: 'รายงาน LINE', icon: '💬', el: LineReport },
-  { id: 'impact', label: 'ผลลัพธ์', icon: '📈', el: Impact },
+  { id: 'intro', label: 'แนวคิด', icon: Target, el: Intro },
+  { id: 'workflow', label: 'เวิร์กโฟลว์', icon: WorkflowIcon, el: Workflow },
+  { id: 'forecast', label: 'พยากรณ์ AI', icon: Brain, el: Forecast },
+  { id: 'line', label: 'รายงาน LINE', icon: MessageSquare, el: LineReport },
+  { id: 'impact', label: 'ผลลัพธ์', icon: TrendingUp, el: Impact },
 ]
 
 function Shell() {
@@ -44,7 +45,7 @@ function Shell() {
                       : 'border-transparent text-ink-soft hover:text-ink'
                   }`}
                 >
-                  <span className="text-[15px]">{t.icon}</span>
+                  <t.icon className="h-4 w-4" aria-hidden="true" />
                   {t.label}
                 </button>
               )

@@ -1,5 +1,15 @@
+import { Globe, Tablet, Smartphone, Router, Signal, Package } from 'lucide-react'
 import { SKUS, CAMPAIGN, SHOP } from '../data/mock.js'
 import { Card, SectionLabel, Tag, RISK, LivePill } from './ui.jsx'
+
+// device glyph per SKU (keyed by id so mock.js stays data-only) — lucide, to
+// match the icon language used across the rest of the app
+const SKU_ICON = {
+  'ipad-a16': Tablet,
+  'ip15-128': Smartphone,
+  'wifi6-router': Router,
+  'sim-5g': Signal,
+}
 
 // One row of the reasoning chain: label → value
 function Step({ n, label, value, accent }) {
@@ -12,7 +22,7 @@ function Step({ n, label, value, accent }) {
         {n}
       </span>
       <span className="flex-1 text-[13px] text-ink-soft">{label}</span>
-      <span className="text-[13px] font-bold text-ink">{value}</span>
+      <span className="tnum text-[13px] font-bold text-ink">{value}</span>
     </div>
   )
 }
@@ -20,6 +30,7 @@ function Step({ n, label, value, accent }) {
 function ForecastCard({ sku }) {
   const r = RISK[sku.risk]
   const dailyDemand = Math.round((sku.forecastDemand / 7) * 10) / 10
+  const SkuIcon = SKU_ICON[sku.id] || Package
   return (
     <Card className="overflow-hidden">
       <div
@@ -27,14 +38,19 @@ function ForecastCard({ sku }) {
         style={{ background: r.soft }}
       >
         <div className="flex items-center gap-2">
-          <span className="text-xl">{sku.emoji}</span>
+          <SkuIcon className="h-5 w-5 shrink-0" style={{ color: r.color }} strokeWidth={2} aria-hidden="true" />
           <div>
             <div className="text-[14px] font-bold text-ink">{sku.name}</div>
             <div className="text-[11px] text-ink-soft">{sku.category}</div>
           </div>
         </div>
         <Tag color={r.color}>
-          {r.dot} {r.label}
+          <span
+            className="h-2 w-2 shrink-0 rounded-full"
+            style={{ background: r.color }}
+            aria-hidden="true"
+          />
+          {r.label}
         </Tag>
       </div>
 
@@ -55,7 +71,7 @@ function ForecastCard({ sku }) {
               <div className="text-[11px] font-semibold uppercase tracking-wide text-ink-soft/70">
                 Days of cover
               </div>
-              <div className="text-[28px] font-bold leading-none" style={{ color: r.color }}>
+              <div className="tnum text-[28px] font-bold leading-none" style={{ color: r.color }}>
                 {sku.cover}
                 <span className="ml-1 text-[14px] font-medium text-ink-soft">วัน</span>
               </div>
@@ -65,7 +81,7 @@ function ForecastCard({ sku }) {
                 <div className="text-[11px] font-semibold uppercase tracking-wide text-ink-soft/70">
                   แนะนำเติม
                 </div>
-                <div className="text-[20px] font-bold text-ink">+{sku.recommendRestock}</div>
+                <div className="tnum text-[20px] font-bold text-ink">+{sku.recommendRestock}</div>
               </div>
             ) : (
               <div className="text-[12px] font-semibold text-[#16a34a]">ไม่ต้องเติมเพิ่ม</div>
@@ -100,7 +116,7 @@ export default function Forecast() {
       {/* the detected signal */}
       <Card className="border-true/20 bg-true-soft p-5">
         <div className="flex items-start gap-3">
-          <span className="text-2xl">🌐</span>
+          <Globe className="h-6 w-6 shrink-0 text-true" aria-hidden="true" />
           <div>
             <div className="flex flex-wrap items-center gap-2">
               <span className="text-[14px] font-bold text-ink">

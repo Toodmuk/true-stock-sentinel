@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Lock } from 'lucide-react'
 import { Brand } from './ui.jsx'
 
 // Soft client-side gate (same pattern as the True Service Flow site).
@@ -55,7 +56,7 @@ export default function PasswordGate({ children }) {
             err ? 'border-true' : 'border-line'
           }`}
         >
-          <span className="text-ink-soft">🔒</span>
+          <Lock className="h-4 w-4 shrink-0 text-ink-soft" aria-hidden="true" />
           <input
             type="password"
             autoFocus
@@ -65,7 +66,7 @@ export default function PasswordGate({ children }) {
               setErr(false)
             }}
             placeholder="รหัสผ่าน"
-            className="w-full bg-transparent text-[15px] text-ink outline-none"
+            className="w-full bg-transparent text-[16px] text-ink outline-none"
           />
         </div>
         {err && (
@@ -79,7 +80,7 @@ export default function PasswordGate({ children }) {
           เข้าชม
         </button>
 
-        <p className="mt-4 text-center text-[11px] leading-relaxed text-ink-soft/60">
+        <p className="mt-4 text-center text-[11px] leading-relaxed text-ink-soft/70">
           ต้นแบบแนวคิด · True Next Gen
         </p>
       </form>

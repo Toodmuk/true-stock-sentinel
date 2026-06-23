@@ -1,17 +1,29 @@
+import {
+  CircleCheck,
+  TriangleAlert,
+  ShieldCheck,
+  TrendingUp,
+  Leaf,
+  ArrowRight,
+} from 'lucide-react'
 import { IMPACT } from '../data/mock.js'
 import { Card, SectionLabel } from './ui.jsx'
+
+// IMPACT.values index → lucide icon (replaces emoji at the render site; mock.js stays untouched)
+const VALUE_ICON = [ShieldCheck, TrendingUp, Leaf]
 
 function StoryCol({ data }) {
   const good = data.tone === 'good'
   const accent = good ? '#16a34a' : '#e2231a'
   const soft = good ? '#f0fdf4' : '#fef2f2'
+  const StatusIcon = good ? CircleCheck : TriangleAlert
   return (
     <Card className="overflow-hidden">
       <div
         className="flex items-center gap-2 px-5 py-3"
         style={{ background: soft, color: accent }}
       >
-        <span className="text-lg">{good ? '✅' : '⚠️'}</span>
+        <StatusIcon className="h-5 w-5 shrink-0" style={{ color: accent }} aria-hidden="true" />
         <span className="text-[15px] font-bold">{data.title}</span>
       </div>
       <ul className="space-y-2.5 px-5 py-4">
@@ -41,7 +53,7 @@ export default function Impact() {
         <StoryCol data={IMPACT.before} />
         {/* arrow between columns */}
         <div className="pointer-events-none absolute left-1/2 top-1/2 z-10 hidden h-9 w-9 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-line bg-white text-true shadow-card sm:flex">
-          →
+          <ArrowRight className="h-5 w-5" aria-hidden="true" />
         </div>
         <StoryCol data={IMPACT.after} />
       </div>
@@ -49,12 +61,15 @@ export default function Impact() {
       <div>
         <SectionLabel>คุณค่าหลัก</SectionLabel>
         <div className="grid gap-3 sm:grid-cols-3">
-          {IMPACT.values.map((v) => (
-            <Card key={v.text} className="p-4">
-              <div className="text-2xl">{v.icon}</div>
-              <p className="mt-2 text-[14px] font-semibold leading-relaxed text-ink">{v.text}</p>
-            </Card>
-          ))}
+          {IMPACT.values.map((v, i) => {
+            const Icon = VALUE_ICON[i]
+            return (
+              <Card key={v.text} className="p-4">
+                {Icon && <Icon className="h-6 w-6 text-true" aria-hidden="true" />}
+                <p className="mt-2 text-[14px] font-semibold leading-relaxed text-ink">{v.text}</p>
+              </Card>
+            )
+          })}
         </div>
       </div>
 
@@ -67,7 +82,7 @@ export default function Impact() {
             { big: 'อัตโนมัติ', small: 'ผู้จัดการไม่ต้องนั่งเช็คสต็อกเอง' },
           ].map((m) => (
             <div key={m.small} className="px-5 py-5 text-center">
-              <div className="text-[24px] font-bold text-true">{m.big}</div>
+              <div className="tnum text-[24px] font-bold text-true">{m.big}</div>
               <div className="mt-1 text-[12px] leading-relaxed text-ink-soft">{m.small}</div>
             </div>
           ))}

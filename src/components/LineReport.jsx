@@ -1,3 +1,4 @@
+import { ChevronLeft, Menu, Clock, Target, Hash, MessageSquare } from 'lucide-react'
 import { LINE_REPORT, SHOP } from '../data/mock.js'
 import { Card, SectionLabel } from './ui.jsx'
 
@@ -15,7 +16,7 @@ function PhoneFrame({ children }) {
             className="flex items-center gap-2 px-4 pb-2.5 pt-7 text-white"
             style={{ background: LINE_GREEN }}
           >
-            <span className="text-[18px]">‹</span>
+            <ChevronLeft className="h-5 w-5" aria-hidden="true" />
             <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20 text-[15px]">
               🤖
             </span>
@@ -25,7 +26,7 @@ function PhoneFrame({ children }) {
               </div>
               <div className="truncate text-[10px] text-white/80">Official Account · บอท</div>
             </div>
-            <span className="text-[15px]">☰</span>
+            <Menu className="h-5 w-5" aria-hidden="true" />
           </div>
           {/* chat body */}
           <div className="space-y-2.5 px-3 py-4">{children}</div>
@@ -115,7 +116,7 @@ export default function LineReport() {
           {/* CTA button bubble */}
           <Bubble>
             <button
-              className="w-full rounded-xl py-2 text-[13px] font-bold text-white shadow-sm"
+              className="flex min-h-[44px] w-full items-center justify-center rounded-xl py-2 text-[13px] font-bold text-white shadow-sm"
               style={{ background: LINE_GREEN }}
             >
               {r.cta} →
@@ -127,29 +128,29 @@ export default function LineReport() {
         <div className="stagger space-y-3">
           {[
             {
-              icon: '⏰',
+              icon: Clock,
               title: 'มาถึงก่อนร้านเปิด',
               body: 'ส่งทุกเช้าวันจันทร์ 07:00 ผู้จัดการเห็นภาพรวมก่อนเริ่มงาน มีเวลาสั่งเติมของ',
             },
             {
-              icon: '🎯',
+              icon: Target,
               title: 'จัดลำดับความสำคัญให้แล้ว',
               body: 'แดง = ต้องทำวันนี้, ส้ม = จับตา, เขียว = ปล่อยได้ ผู้จัดการไม่ต้องไล่อ่านทั้งสต็อก',
             },
             {
-              icon: '🔢',
+              icon: Hash,
               title: 'บอกจำนวนที่ควรเติมเป๊ะ ๆ',
               body: '“เติม +20 เครื่อง ก่อนพฤหัสฯ” — เป็นคำสั่งที่ลงมือได้เลย ไม่ใช่แค่แจ้งเตือนลอย ๆ',
             },
             {
-              icon: '💬',
+              icon: MessageSquare,
               title: 'อยู่ในเครื่องมือที่ใช้จริง',
               body: 'ไม่ต้องล็อกอินแดชบอร์ดใหม่ ทุกอย่างมาที่ LINE ที่ผู้จัดการเปิดอยู่แล้ว',
             },
           ].map((c) => (
             <Card key={c.title} className="p-4">
               <div className="flex items-start gap-3">
-                <span className="text-2xl">{c.icon}</span>
+                <c.icon className="h-6 w-6 shrink-0 text-true" aria-hidden="true" />
                 <div>
                   <div className="text-[14px] font-bold text-ink">{c.title}</div>
                   <p className="mt-0.5 text-[13px] leading-relaxed text-ink-soft">{c.body}</p>

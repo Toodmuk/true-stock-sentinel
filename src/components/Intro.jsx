@@ -1,10 +1,20 @@
+import {
+  Package,
+  Globe,
+  Brain,
+  MessageSquare,
+  ArrowRight,
+  Eye,
+  Scale,
+  Hand,
+} from 'lucide-react'
 import { Card, Tag, SectionLabel } from './ui.jsx'
 
 const LOOP = [
-  { icon: '📦', label: 'ตรวจสต็อก' },
-  { icon: '🌐', label: 'สแกนโปรโมชัน' },
-  { icon: '🧠', label: 'พยากรณ์ดีมานด์' },
-  { icon: '💬', label: 'แจ้งเตือน LINE' },
+  { icon: Package, label: 'ตรวจสต็อก' },
+  { icon: Globe, label: 'สแกนโปรโมชัน' },
+  { icon: Brain, label: 'พยากรณ์ดีมานด์' },
+  { icon: MessageSquare, label: 'แจ้งเตือน LINE' },
 ]
 
 export default function Intro() {
@@ -45,13 +55,11 @@ export default function Intro() {
             {LOOP.map((s, i) => (
               <div key={s.label} className="flex items-center gap-2">
                 <div className="flex items-center gap-2 rounded-xl border border-line bg-cloud px-3 py-2">
-                  <span className="text-lg">{s.icon}</span>
+                  <s.icon className="h-5 w-5 text-true" aria-hidden="true" />
                   <span className="text-[13px] font-semibold text-ink">{s.label}</span>
                 </div>
                 {i < LOOP.length - 1 && (
-                  <span className="text-true" aria-hidden="true">
-                    →
-                  </span>
+                  <ArrowRight className="h-4 w-4 text-true" aria-hidden="true" />
                 )}
               </div>
             ))}
@@ -96,29 +104,29 @@ export default function Intro() {
         <div className="grid gap-3 sm:grid-cols-2">
           {[
             {
-              icon: '👁️',
+              icon: Eye,
               title: 'Perceive — รับรู้',
               body: 'ตรวจจับสัญญาณจากระบบนิเวศ เช่น แคมเปญเปิดเทอม การเปิดตัวสินค้า หรือโปรของคู่แข่ง',
             },
             {
-              icon: '🧠',
+              icon: Brain,
               title: 'Reason — คิด',
               body: 'พยากรณ์ว่าดีมานด์จะเพิ่มขึ้นเท่าไหร่ เทียบกับสต็อกและอัตราการขายปัจจุบัน',
             },
             {
-              icon: '⚖️',
+              icon: Scale,
               title: 'Decide — ตัดสินใจ',
               body: 'คำนวณ days-of-cover และให้คะแนนความเสี่ยงต่อ SKU ว่าตัวไหนจะหมดก่อน',
             },
             {
-              icon: '✋',
+              icon: Hand,
               title: 'Act — ลงมือ',
               body: 'ร่างรายงานพร้อมจำนวนที่ควรเติม แล้วส่งเข้า LINE ของผู้จัดการโดยตรง',
             },
           ].map((c) => (
             <Card key={c.title} className="p-4">
               <div className="flex items-start gap-3">
-                <span className="text-2xl">{c.icon}</span>
+                <c.icon className="h-6 w-6 shrink-0 text-true" aria-hidden="true" />
                 <div>
                   <div className="text-[14px] font-bold text-ink">{c.title}</div>
                   <p className="mt-0.5 text-[13px] leading-relaxed text-ink-soft">{c.body}</p>
